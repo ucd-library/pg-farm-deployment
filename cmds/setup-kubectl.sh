@@ -7,6 +7,10 @@ cd $ROOT_DIR
 source ./set-environment.sh $1
 source ../config/config.sh
 
-gcloud container clusters get-credentials $GKE_CLUSTER_NAME \
-  --zone=$GKE_CLUSTER_ZONE \
-  --project=$GC_PROJECT_ID
+if [[ $LOCAL_DEV == "true" ]]; then
+  minikube update-context
+else 
+  gcloud container clusters get-credentials $GKE_CLUSTER_NAME \
+    --zone=$GKE_CLUSTER_ZONE \
+    --project=$GC_PROJECT_ID
+fi

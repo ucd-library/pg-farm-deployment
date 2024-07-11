@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health-probe
+spec:
+  template:
+    spec:
+      containers:
+      - name: health-probe
+        image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:main
+        env:
+        - name : "APP_URL"
+          value : "https://pgfarm.library.ucdavis.edu"
+        - name: METRICS_ENABLED
+          value: "true"
+        - name: METRICS_EXPORT_GC
+          value: "true"
+      nodeSelector:
+        intendedfor: services

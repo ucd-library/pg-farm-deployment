@@ -10,16 +10,8 @@ SOURCE_DIR=../../pg-farm
 # This is what we are building for
 source ./set-environment.sh $1
 
-
 # Grab branch or tag name, this is what we are building
-if [[ $LOCAL_DEV == "true" ]]; then
-  BRANCH_TAG_NAME=$(cd $SOURCE_DIR && git rev-parse --abbrev-ref HEAD)
-elif [[ -z "$2" ]]; then
-  echo "No branch or tag provided, exiting"
-  exit -1;
-else
-  BRANCH_TAG_NAME=$2
-fi
+source ./set-tag.sh $2
 
 # Grab all config for the build
 source ../config/config.sh
@@ -73,7 +65,7 @@ echo "SHA: $SHORT_SHA"
 echo "Version: $VERSION"
 
 echo -e "\nBuilding images:"
-echo "  $PG_FARM_SERVICE_IMAGE:$PG_FARM_BRANCH$TAG_LABEL"
+echo "  $PG_FARM_SERVICE_IMAGE:$PG_FARM_BRANCH"
 echo ""
 
 source ./build/$BUILD_ENV.sh

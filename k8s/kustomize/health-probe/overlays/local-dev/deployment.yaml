@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health-probe
+spec:
+  template:
+    spec:
+      containers:
+      - name: health-probe
+        image: {{PG_FARM_SERVICE_IMAGE}}:{{BRANCH_TAG_NAME}}
+        env:
+        - name : "APP_URL"
+          value : "https://localhost:3000"
+        - name: METRICS_ENABLED
+          value: "false"
+        - name: METRICS_EXPORT_GC
+          value: "false"

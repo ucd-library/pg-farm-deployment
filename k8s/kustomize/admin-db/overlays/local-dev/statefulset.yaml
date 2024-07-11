@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
       - name: pg-helper
-        image: localhost/local-dev/pgfarm-service:main
+        image: {{PG_FARM_SERVICE_IMAGE}}:{{BRANCH_TAG_NAME}}
         volumeMounts:
         - name: gcs-fuse
           mountPath: /backups     
@@ -18,4 +18,4 @@ spec:
         emptyDir: {}
       - name: local-pghelpers
         hostPath:
-          path: /hosthome/Users/jrmerz/dev/library/pg-farm/services/pg-helper
+          path: /hosthome/{{REPO_DIR}}/services/pg-helper

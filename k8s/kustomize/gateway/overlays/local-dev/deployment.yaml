@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+spec:
+  template:
+    spec:
+      containers:
+      - name: gateway
+        image: {{PG_FARM_SERVICE_IMAGE}}:{{BRANCH_TAG_NAME}}
+        env:
+        - name: PROXY_DEBUG
+          value: "false"
+        - name : "APP_URL"
+          value : "https://localhost:3000"
+        - name : "GATEWAY_HTTP_ENABLED"
+          value : "true"
+        - name: METRICS_ENABLED
+          value: "false"
+        - name: METRICS_EXPORT_GC
+          value: "false"
