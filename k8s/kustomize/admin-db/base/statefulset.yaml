@@ -61,7 +61,6 @@ spec:
           mountPath: /var/run/postgresql
         - name: service-account
           mountPath: /etc/google        
-      serviceAccountName: pgfarm-ksa
       volumes:
       - name: pg-socket
         emptyDir: {}

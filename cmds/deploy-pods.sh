@@ -18,21 +18,40 @@ if [[ $LOCAL_DEV == "true" ]]; then
 fi
 kubectl config set-context --current --namespace=$K8S_NAMESPACE
 
-# render templates
+# render templates for local dev
 if [[ $LOCAL_DEV == true ]]; then
   export REPO_DIR=$(realpath $SOURCE_DIR)
   export BRANCH_TAG_NAME
-
 
   cork-template \
     -c ../config/config.sh \
     -t $YAML_DIR/admin-db/overlays/local-dev \
     -o $YAML_DIR/admin-db/overlays/$GEN_DIR_NAME
 
+  cork-template \
+    -c ../config/config.sh \
+    -t $YAML_DIR/admin/overlays/local-dev \
+    -o $YAML_DIR/admin/overlays/$GEN_DIR_NAME
+
+  cork-template \
+    -c ../config/config.sh \
+    -t $YAML_DIR/gateway/overlays/local-dev \
+    -o $YAML_DIR/gateway/overlays/$GEN_DIR_NAME
+
+  cork-template \
+    -c ../config/config.sh \
+    -t $YAML_DIR/health-probe/overlays/local-dev \
+    -o $YAML_DIR/health-probe/overlays/$GEN_DIR_NAME
+
   BUILD_ENV=$GEN_DIR_NAME
+else
+  kubectl apply -k $YAML_DIR/gcs-mount/base
 fi
 
+kubectl apply -k $YAML_DIR/admin/overlays/$BUILD_ENV
 kubectl apply -k $YAML_DIR/admin-db/overlays/$BUILD_ENV
+kubectl apply -k $YAML_DIR/gateway/overlays/$BUILD_ENV
+kubectl apply -k $YAML_DIR/health-probe/overlays/$BUILD_ENV
 
 # kubectl apply -f $YAML_DIR/health-probe-deployment.yaml
 # kubectl apply -f $YAML_DIR/health-probe-service.yaml

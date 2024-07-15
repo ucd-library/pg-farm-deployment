@@ -10,9 +10,15 @@ if [[ ! -d $SECRET_DIR ]]; then
 fi
 
 source ./set-environment.sh $1
-source ../config/config.sh
+source ../config/config.sh $1
 
-./setup-kubectl.sh
+./setup-kubectl.sh $1
+
+K8S_NAMESPACE=default
+if [[ $LOCAL_DEV == "true" ]]; then
+  K8S_NAMESPACE=pg-farm
+fi
+
 
 gcloud config set project ${GC_PROJECT_ID}
 
@@ -21,15 +27,15 @@ gcloud secrets versions access latest --secret=app-env > $SECRET_DIR/env
 gcloud secrets versions access latest --secret=ssl-pgfarm-cert > $SECRET_DIR/ssl-pgfarm.crt
 gcloud secrets versions access latest --secret=ssl-pgfarm-key > $SECRET_DIR/ssl-pgfarm.key
 
-kubectl delete secret app-env || true
-kubectl create secret generic app-env \
+kubectl delete secret app-env -n $K8S_NAMESPACE || true
+kubectl create secret generic app-env -n $K8S_NAMESPACE \
   --from-env-file=$SECRET_DIR/env
 
-kubectl delete secret service-account || true
-kubectl create secret generic service-account \
+kubectl delete secret service-account -n $K8S_NAMESPACE || true
+kubectl create secret generic service-account -n $K8S_NAMESPACE \
  --from-file=service-account.json=$SECRET_DIR/service-account.json || true
 
-kubectl delete secret pgfarm-ssl || true
-kubectl create secret generic pgfarm-ssl \
+kubectl delete secret pgfarm-ssl -n $K8S_NAMESPACE || true
+kubectl create secret generic pgfarm-ssl -n $K8S_NAMESPACE \
  --from-file=ssl-pgfarm.crt=$SECRET_DIR/ssl-pgfarm.crt \
  --from-file=ssl-pgfarm.key=$SECRET_DIR/ssl-pgfarm.key || true

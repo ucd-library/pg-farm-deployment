@@ -12,5 +12,3 @@ spec:
         env:
         - name : "APP_URL"
           value : "https://localhost:3000"
-      nodeSelector:
-        intendedfor: services
