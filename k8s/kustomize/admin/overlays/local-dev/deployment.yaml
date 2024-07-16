@@ -11,4 +11,23 @@ spec:
         command: ["npm", "run", "administration"]
         env:
         - name : "APP_URL"
-          value : "https://localhost:3000"
+          value : "http://localhost:3000"
+        - name : "K8S_PLATFORM"
+          value: "docker-desktop"
+        volumeMounts:
+        - name: src-administration
+          mountPath: /services/administration
+        - name: src-lib
+          mountPath: /services/lib
+        - name: kubeconfig
+          mountPath: /root/.kube
+      volumes:
+        - name: src-administration
+          hostPath:
+            path: {{REPO_DIR}}/services/administration
+        - name: src-lib
+          hostPath:
+            path: {{REPO_DIR}}/services/lib
+        - name: kubeconfig
+          configMap:
+            name: kubeconfig

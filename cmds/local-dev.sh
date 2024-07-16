@@ -71,9 +71,20 @@ elif [[ $CMD == "build" ]]; then
   fi
 
   ./build.sh local-dev
+elif [[ $CMD == "dashboard" ]]; then
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
+
+  kubectl create serviceaccount -n kubernetes-dashboard admin-user || true
+  kubectl create clusterrolebinding admin-user-cluster-admin --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:admin-user || true
+
+  kubectl proxy
+elif [[ $CMD == "dashboard-token" ]]; then
+  kubectl create token -n kubernetes-dashboard admin-user
 else
   echo "Unknown command: $CMD.  Commands are 'start', 'stop' or 'delete'"
   exit -1
 fi
+
+# kubectl create configmap kubeconfig --from-file=$HOME/.kube/config
 
 

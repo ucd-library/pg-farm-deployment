@@ -12,7 +12,7 @@ spec:
         - name: PROXY_DEBUG
           value: "false"
         - name : "APP_URL"
-          value : "https://localhost:3000"
+          value : "http://localhost:3000"
         - name : "GATEWAY_HTTP_ENABLED"
           value : "true"
         - name: METRICS_ENABLED
