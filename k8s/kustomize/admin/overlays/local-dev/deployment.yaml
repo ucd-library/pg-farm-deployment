@@ -8,6 +8,7 @@ spec:
       containers:
       - name: admin
         image: {{PG_FARM_SERVICE_IMAGE}}:{{BRANCH_TAG_NAME}}
+        imagePullPolicy: Never
         command: ["npm", "run", "administration"]
         env:
         - name : "APP_URL"
@@ -19,6 +20,8 @@ spec:
           mountPath: /services/administration
         - name: src-lib
           mountPath: /services/lib
+        - name: src-models
+          mountPath: /services/models
         - name: kubeconfig
           mountPath: /root/.kube
       volumes:
@@ -28,6 +31,9 @@ spec:
         - name: src-lib
           hostPath:
             path: {{REPO_DIR}}/services/lib
+        - name: src-models
+          hostPath:
+            path: {{REPO_DIR}}/services/models
         - name: kubeconfig
           configMap:
             name: kubeconfig

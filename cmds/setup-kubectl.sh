@@ -11,7 +11,7 @@ if [[ $LOCAL_DEV == "true" ]]; then
   if [[ $K8S_BACKEND == "minikube" ]]; then
     minikube update-context
     kubectl config use-context minikube
-  elif [[ $K8S_BACKEND == "docker" ]]; then
+  else
     kubectl config use-context docker-desktop
   fi
 else 

@@ -1,21 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway
+  name: client
 spec:
   template:
     spec:
       containers:
-      - name: gateway
+      - name: client
         image: {{PG_FARM_SERVICE_IMAGE}}:{{BRANCH_TAG_NAME}}
         imagePullPolicy: Never
         env:
-        - name: PROXY_DEBUG
-          value: "false"
         - name : "APP_URL"
           value : "http://localhost:3000"
-        - name : "GATEWAY_HTTP_ENABLED"
-          value : "true"
         - name: METRICS_ENABLED
           value: "false"
         - name: METRICS_EXPORT_GC
@@ -23,10 +19,8 @@ spec:
         - name : "K8S_PLATFORM"
           value: "docker-desktop"
         volumeMounts:
-        - name: src-gateway
-          mountPath: /services/gateway
-        - name: src-administration
-          mountPath: /services/administration
+        - name: src-client
+          mountPath: /services/client
         - name: src-lib
           mountPath: /services/lib
         - name: src-models
@@ -34,12 +28,9 @@ spec:
         - name: kubeconfig
           mountPath: /root/.kube
       volumes:
-        - name: src-gateway
+        - name: src-client
           hostPath:
-            path: {{REPO_DIR}}/services/gateway
-        - name: src-administration
-          hostPath:
-            path: {{REPO_DIR}}/services/administration
+            path: {{REPO_DIR}}/services/client
         - name: src-lib
           hostPath:
             path: {{REPO_DIR}}/services/lib

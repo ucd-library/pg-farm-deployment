@@ -22,6 +22,7 @@ kubectl config set-context --current --namespace=$K8S_NAMESPACE
 if [[ $LOCAL_DEV == true ]]; then
   export REPO_DIR=$(realpath $SOURCE_DIR)
   export BRANCH_TAG_NAME
+  export LOCAL_DEV
 
   cork-template \
     -c ../config/config.sh \
@@ -43,6 +44,11 @@ if [[ $LOCAL_DEV == true ]]; then
     -t $YAML_DIR/health-probe/overlays/local-dev \
     -o $YAML_DIR/health-probe/overlays/$GEN_DIR_NAME
 
+  cork-template \
+    -c ../config/config.sh \
+    -t $YAML_DIR/client/overlays/local-dev \
+    -o $YAML_DIR/client/overlays/$GEN_DIR_NAME
+
   BUILD_ENV=$GEN_DIR_NAME
 else
   kubectl apply -k $YAML_DIR/gcs-mount/base
@@ -52,6 +58,7 @@ kubectl apply -k $YAML_DIR/admin/overlays/$BUILD_ENV
 kubectl apply -k $YAML_DIR/admin-db/overlays/$BUILD_ENV
 kubectl apply -k $YAML_DIR/gateway/overlays/$BUILD_ENV
 kubectl apply -k $YAML_DIR/health-probe/overlays/$BUILD_ENV
+kubectl apply -k $YAML_DIR/client/overlays/$BUILD_ENV
 
 # kubectl apply -f $YAML_DIR/health-probe-deployment.yaml
 # kubectl apply -f $YAML_DIR/health-probe-service.yaml

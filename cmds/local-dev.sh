@@ -60,7 +60,9 @@ elif [[ $CMD == "stop" ]]; then
   kubectl delete services --all -n $K8S_NAMESPACE
   kubectl delete jobs --all -n $K8S_NAMESPACE
   
-  minikube stop
+  if [[ $K8S_BACKEND == "minikube" ]]; then
+    minikube stop
+  fi
 elif [[ $CMD == "build" ]]; then
   echo "building images"
 
@@ -79,7 +81,21 @@ elif [[ $CMD == "dashboard" ]]; then
 
   kubectl proxy
 elif [[ $CMD == "dashboard-token" ]]; then
-  kubectl create token -n kubernetes-dashboard admin-user
+  kubectl create token -n kubernetes-dashboard --duration 24h admin-user
+elif [[ $CMD == "log" ]]; then
+  POD=$(kubectl get pods --selector=app=$2 --field-selector=status.phase=Running -o jsonpath='{.items[0].metadata.name}')
+  if [[ -z $POD ]]; then
+    echo "No running pods found for app $2"
+    exit -1
+  fi
+  kubectl logs $POD -f
+elif [[ $CMD == "exec" ]]; then
+  POD=$(kubectl get pods --selector=app=$2 --field-selector=status.phase=Running -o jsonpath='{.items[0].metadata.name}')
+  if [[ -z $POD ]]; then
+    echo "No running pods found for app $2"
+    exit -1
+  fi
+  kubectl exec -ti $POD -- bash
 else
   echo "Unknown command: $CMD.  Commands are 'start', 'stop' or 'delete'"
   exit -1
