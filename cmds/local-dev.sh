@@ -95,7 +95,13 @@ elif [[ $CMD == "exec" ]]; then
     echo "No running pods found for app $2"
     exit -1
   fi
-  kubectl exec -ti $POD -- bash
+  POD_CMD=bash
+  if [[ ! -z $3 ]]; then
+    POD_CMD=$3
+  fi
+  kubectl exec -ti $POD -- $POD_CMD
+elif [[ $CMD == "init-kubectl" ]]; then
+  kubectl config use-context docker-desktop
 else
   echo "Unknown command: $CMD.  Commands are 'start', 'stop' or 'delete'"
   exit -1
