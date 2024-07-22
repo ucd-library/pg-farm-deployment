@@ -100,11 +100,25 @@
         "problemMatcher": []
       },
       {
-          "label": "Setup PG Farm Dev Environment",
+        "label": "Deploy Pods",
+        "type": "shell",
+        "command": "./cmds/local-dev.sh start",
+        "presentation": {
+            "echo": true,
+            "reveal": "always",
+            "focus": false,
+            "panel": "dedicated",
+            "showReuseMessage": false,
+            "clear": false
+        },
+        "problemMatcher": []
+      },
+      {
+          "label": "Run all local-dev tasks",
           "dependsOn": [
-              "Init kubectl",
               "Proxy Dashboard",
               "Generate Dashboard Token",
+              "Deploy Pods",
               "Proxy Gateway HTTP",
               "Proxy Gateway PG",
               "Proxy Admin DB",

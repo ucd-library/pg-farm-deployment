@@ -11,77 +11,43 @@ CMD=$1
 
 K8S_BACKEND=${K8S_BACKEND:-docker}
 
+if [[ $(kubectl config current-context) != "docker-desktop" ]]; then
+  kubectl config use-context docker-desktop
+fi
+kubectl config set-context --current --namespace=$K8S_NAMESPACE
 
 if [[ $CMD == "start" ]]; then  
-
-  if [[ $K8S_BACKEND == "minikube" ]]; then
-    MINIKUBE_STATUS=$(minikube status -f "{{.Host}}" || true)
-    if [[ $MINIKUBE_STATUS == "Stopped" ]]; then
-      echo "MiniKube is stopped, starting..."
-      minikube start \
-        --memory=12g \
-        --cpus=6
-
-      # mount home directory into minikube space
-      # https://minikube.sigs.k8s.io/docs/handbook/mount/
-      # This must be started before the cluster is up
-      echo "launching minikube $HOME mount in new tab"
-      tab minikube mount $HOME:/hosthome
-
-      echo "starting k8s dashboard process in new tab"
-      tab minikube dashboard
-    fi
-  fi
-
-  # set kubectl context
-  if [[ $K8S_BACKEND == "minikube" ]]; then
-    kubectl config use-context minikube
-  elif [[ $K8S_BACKEND == "docker" ]]; then
-    kubectl config use-context docker-desktop
-  fi
-
-  # ensure images are built
-  # ./local-dev.sh build
-
 
   # deploy all pods
   ./deploy-pods.sh local-dev
 elif [[ $CMD == "stop" ]]; then
-
-  # set kubectl context
-  if [[ $K8S_BACKEND == "minikube" ]]; then
-    kubectl config use-context minikube
-  elif [[ $K8S_BACKEND == "docker" ]]; then
-    kubectl config use-context docker-desktop
-  fi
 
   kubectl delete statefulsets --all -n $K8S_NAMESPACE
   kubectl delete deployments --all -n $K8S_NAMESPACE
   kubectl delete services --all -n $K8S_NAMESPACE
   kubectl delete jobs --all -n $K8S_NAMESPACE
   
-  if [[ $K8S_BACKEND == "minikube" ]]; then
-    minikube stop
-  fi
 elif [[ $CMD == "build" ]]; then
+
   echo "building images"
-
-  if [[ $K8S_BACKEND == "minikube" ]]; then
-    eval $(minikube docker-env)
-  else
-    eval $(minikube docker-env -u)
-  fi
-
   ./build.sh local-dev
-elif [[ $CMD == "dashboard" ]]; then
+
+elif [[ $CMD == "create-dashboard" ]]; then
   kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
 
   kubectl create serviceaccount -n kubernetes-dashboard admin-user || true
   kubectl create clusterrolebinding admin-user-cluster-admin --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:admin-user || true
 
-  kubectl proxy
+  echo "Run 'kubectl edit deployment kubernetes-dashboard -n kubernetes-dashboard'"
+  echo "Add the following to the spec.containers.args section:"
+  echo "  - --token-ttl=86400"
+  echo "To increase the token ttl to 24 hours.  Otherwise the token will expire in 30 minutes.  Frustating!"
+  echo ""
+  echo "Make sure to run 'kubectl proxy' to access the dashboard"
+
+
 elif [[ $CMD == "dashboard-token" ]]; then
-  kubectl create token -n kubernetes-dashboard --duration 24h admin-user
+  kubectl create token -n kubernetes-dashboard --duration=720h admin-user
 elif [[ $CMD == "log" ]]; then
   POD=$(kubectl get pods --selector=app=$2 --field-selector=status.phase=Running -o jsonpath='{.items[0].metadata.name}')
   if [[ -z $POD ]]; then
@@ -99,9 +65,8 @@ elif [[ $CMD == "exec" ]]; then
   if [[ ! -z $3 ]]; then
     POD_CMD=$3
   fi
+  echo "executing: kubectl exec -ti $POD -- $POD_CMD"
   kubectl exec -ti $POD -- $POD_CMD
-elif [[ $CMD == "init-kubectl" ]]; then
-  kubectl config use-context docker-desktop
 else
   echo "Unknown command: $CMD.  Commands are 'start', 'stop' or 'delete'"
   exit -1
