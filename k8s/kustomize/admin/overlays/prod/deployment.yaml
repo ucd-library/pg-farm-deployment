@@ -8,7 +8,6 @@ spec:
       containers:
       - name: admin
         image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:main
-        command: ["npm", "run", "administration"]
         env:
         - name : "APP_URL"
           value : "https://pgfarm.library.ucdavis.edu"

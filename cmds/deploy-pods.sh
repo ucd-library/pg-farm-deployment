@@ -14,7 +14,7 @@ source ./setup-kubectl.sh $1
 K8S_NAMESPACE=default
 if [[ $LOCAL_DEV == "true" ]]; then
   K8S_NAMESPACE=pg-farm
-  EXISTS=$(kubectl get namespace p -o jsonpath='{.metadata.name}' || true)
+  EXISTS=$(kubectl get namespace $K8S_NAMESPACE -o jsonpath='{.metadata.name}' || true)
   if [[ -z $EXISTS ]] ; then
     kubectl create namespace $K8S_NAMESPACE || true
   fi
