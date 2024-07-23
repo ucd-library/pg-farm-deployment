@@ -19,3 +19,5 @@ if [[ $BUILD_ENV != "prod" && $BUILD_ENV != "dev" && $BUILD_ENV != "sandbox" && 
   echo "Invalid BUILD_ENV value: $BUILD_ENV, exiting"
   exit -1;
 fi
+
+echo "Setting environment to: $BUILD_ENV"

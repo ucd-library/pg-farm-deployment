@@ -8,12 +8,7 @@ source ./set-environment.sh $1
 source ../config/config.sh $1
 
 if [[ $LOCAL_DEV == "true" ]]; then
-  if [[ $K8S_BACKEND == "minikube" ]]; then
-    minikube update-context
-    kubectl config use-context minikube
-  else
-    kubectl config use-context docker-desktop
-  fi
+  kubectl config use-context docker-desktop
 else 
   gcloud container clusters get-credentials $GKE_CLUSTER_NAME \
     --zone=$GKE_CLUSTER_ZONE \

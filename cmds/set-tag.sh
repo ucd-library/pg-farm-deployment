@@ -13,3 +13,5 @@ elif [[ -z "$1" ]]; then
 else
   BRANCH_TAG_NAME=$1
 fi
+
+echo "Setting tag to: $BRANCH_TAG_NAME"
