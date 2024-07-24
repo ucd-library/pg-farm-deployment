@@ -114,6 +114,34 @@
         "problemMatcher": []
       },
       {
+        "label": "Build Images",
+        "type": "shell",
+        "command": "./cmds/local-dev.sh build",
+        "presentation": {
+            "echo": true,
+            "reveal": "always",
+            "focus": false,
+            "panel": "dedicated",
+            "showReuseMessage": false,
+            "clear": false
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Remove all pods and services",
+        "type": "shell",
+        "command": "./cmds/local-dev.sh stop",
+        "presentation": {
+            "echo": true,
+            "reveal": "always",
+            "focus": false,
+            "panel": "dedicated",
+            "showReuseMessage": false,
+            "clear": false
+        },
+        "problemMatcher": []
+      },
+      {
           "label": "Run all local-dev tasks",
           "dependsOn": [
               "Proxy Dashboard",
