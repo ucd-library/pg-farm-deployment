@@ -49,7 +49,7 @@ elif [[ $CMD == "create-dashboard" ]]; then
 elif [[ $CMD == "dashboard-token" ]]; then
   kubectl create token -n kubernetes-dashboard --duration=720h admin-user
 elif [[ $CMD == "log" ]]; then
-  POD=$(kubectl get pods --selector=app=$2 --field-selector=status.phase=Running -o jsonpath='{.items[0].metadata.name}')
+  POD=$(kubectl get pods --selector=app=$2 -o json | jq -r '.items[] | select(.metadata.deletionTimestamp == null) | .metadata.name')
   if [[ -z $POD ]]; then
     echo "No running pods found for app $2"
     exit -1

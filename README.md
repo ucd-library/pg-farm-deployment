@@ -55,6 +55,10 @@ If you need to restart a service after a code update, you can do so by running `
 
 Most services have the host machine codes mounted as volumes so you can make changes to the code and the service (statefulset, deployment) will automatically have the changes.  You just need to restart the service.
 
+#### Logging after restarting a service.
+
+When you restart a service, the old service pod is normally still terminating after the new service is up. However, it is often the case the `kubectl logs -f deployment/[name]` will connect to the terminating pod and not the new pod.  You can use `./cmds/local-dev.sh logs [service-name]` where serivce name is something like `admin` to log from a service pod that is not terminating.
+
 ### Stop the application
 
 This will remove all pods/services from the docker desktop k8s instance but leave the volumes intact.
