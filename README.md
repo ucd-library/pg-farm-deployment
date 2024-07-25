@@ -3,6 +3,14 @@ Deployment repo for PG Farm
 
 ## Kubernetes Local Deployment
 
+  - [Prerequisites](#prerequisites)
+  - [Setup Kubernetes locally](#setup-kubernetes-locally)
+  - [Deploy the application](#deploy-the-application)
+  - [Access the application](#access-the-application)
+  - [Restart Services](#restart-services)
+    - [Logging after restarting a service.](#logging-after-restarting-a-service)
+  - [Stop the application](#stop-the-application)
+
 ### Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/)
