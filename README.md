@@ -15,6 +15,14 @@ Deployment repo for PG Farm
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- cork-template `sudo npm install --global @ucd-lib/cork-template`
+- gcloud digital.ucdavis.edu configuration
+
+For getting and setting secrets, you need you gcloud environment to be set for
+`digital.ucdavis.edu`  If you already have that saved as a configutaion you can
+use `gcloud config configurations activate digital` to create it use `gcloud
+config configurations create digital; gcloud config set project
+digital-ucdavis-edu`.
 
 ### Setup Kubernetes locally
 
