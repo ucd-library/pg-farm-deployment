@@ -40,7 +40,10 @@ kubectl create secret generic service-account -n $K8S_NAMESPACE \
  --from-file=service-account.json=$SECRET_DIR/service-account.json || true
 
 if [[ $LOCAL_DEV == "true" ]]; then
-  kubectl create configmap kubeconfig --from-file=$HOME/.kube/config -n $K8S_NAMESPACE || true
+  if (kubectl describe configmap kubeconfig >/dev/null 2>&1 ); then
+    kubectl delete configmap kubeconfig;
+  fi
+  kubectl create configmap kubeconfig --from-file=$HOME/.kube/config -n $K8S_NAMESPACE
   exit 0
 fi
 kubectl delete secret pgfarm-ssl -n $K8S_NAMESPACE || true
