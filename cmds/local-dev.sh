@@ -16,7 +16,7 @@ if [[ $(kubectl config current-context) != "docker-desktop" ]]; then
 fi
 kubectl config set-context --current --namespace=$K8S_NAMESPACE
 
-if [[ $CMD == "start" ]]; then  
+if [[ $CMD == "start" ]]; then
 
   # deploy all pods
   ./deploy-pods.sh local-dev
@@ -26,7 +26,7 @@ elif [[ $CMD == "stop" ]]; then
   kubectl delete deployments --all -n $K8S_NAMESPACE
   kubectl delete services --all -n $K8S_NAMESPACE
   kubectl delete jobs --all -n $K8S_NAMESPACE
-  
+
 elif [[ $CMD == "build" ]]; then
 
   echo "building images"
@@ -37,14 +37,8 @@ elif [[ $CMD == "create-dashboard" ]]; then
 
   kubectl create serviceaccount -n kubernetes-dashboard admin-user || true
   kubectl create clusterrolebinding admin-user-cluster-admin --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:admin-user || true
-
-  echo "Run 'kubectl edit deployment kubernetes-dashboard -n kubernetes-dashboard'"
-  echo "Add the following to the spec.containers.args section:"
-  echo "  - --token-ttl=86400"
-  echo "To increase the token ttl to 24 hours.  Otherwise the token will expire in 30 minutes.  Frustating!"
-  echo ""
-  echo "Make sure to run 'kubectl proxy' to access the dashboard"
-
+  # Update token-ttl
+#  kubectl patch deployment kubernetes-dashboard -n kubernetes-dashboard --type='json' -p '[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--token-ttl=86400"}]'
 
 elif [[ $CMD == "dashboard-token" ]]; then
   kubectl create token -n kubernetes-dashboard --duration=720h admin-user
@@ -73,5 +67,3 @@ else
 fi
 
 # kubectl create configmap kubeconfig --from-file=$HOME/.kube/config
-
-
