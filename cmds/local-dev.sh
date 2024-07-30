@@ -68,7 +68,7 @@ elif [[ $CMD == "exec" ]]; then
   echo "executing: kubectl exec -ti $POD -- $POD_CMD"
   kubectl exec -ti $POD -- $POD_CMD
 else
-  echo "Unknown command: $CMD.  Commands are 'start', 'stop' or 'delete'"
+  echo "Unknown command: $CMD.  Commands are 'start', 'stop', 'log', 'exec', 'create-dashboard', 'dashboard-token'"
   exit -1
 fi
 

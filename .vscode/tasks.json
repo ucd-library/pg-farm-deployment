@@ -142,14 +142,37 @@
         "problemMatcher": []
       },
       {
+        "label": "Sleep",
+        "type": "shell",
+        "command": "sleep 5",
+        "presentation": {
+            "echo": true,
+            "reveal": "never",
+            "focus": false,
+            "panel": "shared",
+            "showReuseMessage": false,
+            "clear": false
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Run all watch tasks",
+        "dependsOn": [
+            "Proxy Dashboard",
+            "Proxy Gateway HTTP",
+            "Proxy Gateway PG",
+            "Proxy Admin DB",
+            "Client Watch"
+        ]
+      },
+      {
           "label": "Run all local-dev tasks",
+          "dependsOrder": "sequence",
           "dependsOn": [
-              "Proxy Dashboard",
-              "Generate Dashboard Token",
               "Deploy Pods",
-              "Proxy Gateway HTTP",
-              "Proxy Gateway PG",
-              "Proxy Admin DB",
+              "Generate Dashboard Token",
+              "Sleep",
+              "Run all watch tasks"
           ]
       }
   ]

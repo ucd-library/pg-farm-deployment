@@ -40,7 +40,17 @@ kubectl create secret generic service-account -n $K8S_NAMESPACE \
  --from-file=service-account.json=$SECRET_DIR/service-account.json || true
 
 if [[ $LOCAL_DEV == "true" ]]; then
-  kubectl create configmap kubeconfig --from-file=$HOME/.kube/config -n $K8S_NAMESPACE || true
+  cp $HOME/.kube/config $SECRET_DIR/kubeconfig
+  yq eval '(.clusters[] | select(.name == "docker-desktop") | .cluster.server ) = "https://kubernetes.docker.internal:6443" | .'  $SECRET_DIR/kubeconfig > $SECRET_DIR/kubeconfig.tmp && \
+    mv $SECRET_DIR/kubeconfig.tmp $SECRET_DIR/kubeconfig
+
+  # make sure the pg-farm service account has cluster-admin role
+  kubectl create clusterrolebinding pg-farm-cluster-admin \
+    --clusterrole=cluster-admin \
+    --serviceaccount=pg-farm:default || true
+
+  kubectl delete configmap kubeconfig -n $K8S_NAMESPACE || true
+  kubectl create configmap kubeconfig --from-file=$SECRET_DIR/kubeconfig -n $K8S_NAMESPACE || true
   exit 0
 fi
 kubectl delete secret pgfarm-ssl -n $K8S_NAMESPACE || true
