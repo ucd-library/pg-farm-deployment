@@ -18,12 +18,15 @@ spec:
         volumeMounts:
         - name: src-administration
           mountPath: /services/administration
+          mountPropagation: Bidirectional
         - name: src-lib
           mountPath: /services/lib
         - name: src-models
           mountPath: /services/models
+          mountPropagation: Bidirectional
         - name: kubeconfig
           mountPath: /root/.kube
+          mountPropagation: Bidirectional
       volumes:
         - name: src-administration
           hostPath:
