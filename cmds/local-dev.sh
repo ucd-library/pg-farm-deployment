@@ -38,7 +38,7 @@ elif [[ $CMD == "create-dashboard" ]]; then
   kubectl create serviceaccount -n kubernetes-dashboard admin-user || true
   kubectl create clusterrolebinding admin-user-cluster-admin --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:admin-user || true
   # Update token-ttl
-#  kubectl patch deployment kubernetes-dashboard -n kubernetes-dashboard --type='json' -p '[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--token-ttl=86400"}]'
+  kubectl patch deployment kubernetes-dashboard -n kubernetes-dashboard --type='json' -p '[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--token-ttl=86400"}]'
 
 elif [[ $CMD == "dashboard-token" ]]; then
   kubectl create token -n kubernetes-dashboard --duration=720h admin-user
