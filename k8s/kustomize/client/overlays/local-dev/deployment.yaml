@@ -18,6 +18,12 @@ spec:
           value: "false"
         - name : "K8S_PLATFORM"
           value: "docker-desktop"
+        - name : "CLIENT_ERROR_REPORTING_ENABLED"
+          value : "true"
+        - name : "CLIENT_ERROR_REPORTING_URL"
+          value : "https://client-error-reporter-akwemh35fa-uw.a.run.app"
+        - name : "CLIENT_ERROR_REPORTING_KEY"
+          value : "6Ff+UkvNLivtnQ"
         volumeMounts:
         - name: src-client
           mountPath: /services/client
