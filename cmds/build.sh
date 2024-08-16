@@ -1,9 +1,9 @@
 #! /bin/bash
 
 set -e
-ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+BUILD_ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-cd $ROOT_DIR
+cd $BUILD_ROOT_DIR
 SOURCE_DIR=../../pg-farm
 
 # Grab build enviornment for argument. 
@@ -18,14 +18,15 @@ source ../config/config.sh
 
 # Grab the source if needed
 if [[ $LOCAL_DEV != 'true' ]]; then
-  cd ..
+  cd ../..
   if [[ ! -d $PGFARM_REPO_NAME ]]; then
-    $GIT_CLONE $PGFARM_REPO_URL.git \
+    echo "$GIT_CLONE $PGFARM_REPO_URL"
+    $GIT_CLONE $PGFARM_REPO_URL \
       --branch $BRANCH_TAG_NAME \
       --depth 1 \
       pg-farm
   fi
-  cd $ROOT_DIR
+  cd $BUILD_ROOT_DIR
 fi
 
 # grab the SHA
@@ -34,9 +35,15 @@ SHORT_SHA=$(cd $SOURCE_DIR && git log -1 --pretty=%h)
 BUILD_DATETIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
 DOCKER="docker"
-DOCKER_BUILD="$DOCKER buildx build --output=type=docker --cache-to=type=inline,mode=max"
+# DOCKER_BUILD="$DOCKER buildx build --output=type=docker --cache-to=type=inline,mode=max"
+DOCKER_BUILD="$DOCKER buildx build --cache-to=type=inline,mode=max"
+
 if [[ $LOCAL_DEV != 'true' ]]; then
-  DOCKER_BUILD="$DOCKER_BUILD --pull"
+  # docker buildx create --driver docker-container --name container --use
+  # DOCKER_BUILD="$DOCKER_BUILD --pull --platform linux/amd64,linux/arm64 --push"
+  DOCKER_BUILD="$DOCKER_BUILD --pull --push"
+else
+  DOCKER_BUILD="$DOCKER_BUILD --output=type=docker"
 fi
 
 # function get_tags() {
@@ -68,4 +75,6 @@ echo -e "\nBuilding images:"
 echo "  $PG_FARM_SERVICE_IMAGE:$PG_FARM_BRANCH"
 echo ""
 
+cd $BUILD_ROOT_DIR
+pwd
 source ./build/$BUILD_ENV.sh

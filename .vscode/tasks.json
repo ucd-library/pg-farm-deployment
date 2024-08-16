@@ -1,5 +1,13 @@
 {
   "version": "2.0.0",
+  "inputs": [
+    {
+        "id": "podName",
+        "type": "promptString",
+        "description": "Enter the pod name",
+        "default": ""
+    }
+  ],
   "tasks": [
       {
           "label": "Proxy Dashboard",
@@ -14,6 +22,20 @@
               "clear": false
           },
           "problemMatcher": []
+      },
+      {
+        "label": "Open Service Shell",
+        "type": "shell",
+        "command": "./cmds/local-dev.sh exec ${input:podName}",
+        "presentation": {
+            "echo": true,
+            "reveal": "always",
+            "focus": false,
+            "panel": "dedicated",
+            "showReuseMessage": false,
+            "clear": false
+        },
+        "problemMatcher": []
       },
       {
           "label": "Generate Dashboard Token",
@@ -88,7 +110,7 @@
       {
         "label": "Init kubectl",
         "type": "shell",
-        "command": "./cmds/local-dev.sh init-kubectl",
+        "command": "./cmds/setup-kubectl.sh local-dev",
         "presentation": {
             "echo": true,
             "reveal": "always",
