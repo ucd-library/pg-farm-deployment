@@ -72,9 +72,10 @@ echo "SHA: $SHORT_SHA"
 echo "Version: $VERSION"
 
 echo -e "\nBuilding images:"
-echo "  $PG_FARM_SERVICE_IMAGE:$PG_FARM_BRANCH"
+echo "  $PG_FARM_SERVICE_IMAGE:$BRANCH_TAG_NAME"
+echo "  $PG_FARM_PG_INSTANCE_IMAGE:$PG_VERSION"
 echo ""
 
 cd $BUILD_ROOT_DIR
-pwd
+echo "running build ./build/$BUILD_ENV.sh"
 source ./build/$BUILD_ENV.sh

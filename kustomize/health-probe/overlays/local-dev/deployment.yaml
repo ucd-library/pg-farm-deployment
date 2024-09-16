@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health-probe
+spec:
+  template:
+    spec:
+      containers:
+      - name: health-probe
+        env:
+        - name: METRICS_ENABLED
+          value: "false"
+        - name: METRICS_EXPORT_GC
+          value: "false"
+        - name : "K8S_PLATFORM"
+          value: "docker-desktop"

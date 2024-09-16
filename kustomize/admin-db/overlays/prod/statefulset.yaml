@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: admin-db
+spec:
+  template:
+    metadata:
+      annotations:
+        gke-gcsfuse/volumes: "true"   
+    spec:
+      containers:
+      - name: pg-helper
+        image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:main
+        volumeMounts:
+        - name: gcs-fuse
+          mountPath: /backups     
+      serviceAccountName: pgfarm-ksa
+      volumes:
+      - name: gcs-fuse
+        persistentVolumeClaim:
+          claimName: gcs-fuse-pvc

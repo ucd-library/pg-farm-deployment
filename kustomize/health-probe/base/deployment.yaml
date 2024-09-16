@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health-probe
+spec:
+  selector:
+    matchLabels:
+      app: health-probe
+  template:
+    metadata:
+      labels:
+        app: health-probe
+    spec:
+      containers:
+      - name: health-probe
+        image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:sandbox
+        imagePullPolicy: Always
+        command: ["/services/start", "health-probe"]
+        env:
+        - name: LOG_LEVEL
+          value: "info"
+        - name : "GOOGLE_APPLICATION_CREDENTIALS"
+          value : "/etc/google/service-account.json"
+        - name: SERVICE_NAME
+          value: "health-probe"
+        envFrom:
+        - secretRef:
+            name: app-env
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+        volumeMounts:
+          - mountPath: /etc/google
+            name: service-account
+      nodeSelector:
+        intendedfor: services
+      volumes:
+      - name: service-account
+        secret:
+          secretName: service-account

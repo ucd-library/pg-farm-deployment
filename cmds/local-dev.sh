@@ -19,7 +19,7 @@ kubectl config set-context --current --namespace=$K8S_NAMESPACE
 if [[ $CMD == "start" ]]; then  
 
   # deploy all pods
-  ./deploy-pods.sh local-dev
+  ./deploy-local-dev-pods.sh
 elif [[ $CMD == "stop" ]]; then
 
   kubectl delete statefulsets --all -n $K8S_NAMESPACE

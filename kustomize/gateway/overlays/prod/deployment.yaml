@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+spec:
+  template:
+    spec:
+      containers:
+      - name: gateway
+        image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:main
+        env:
+        - name: PROXY_DEBUG
+          value: "false"
+        - name : "APP_URL"
+          value : "https://pgfarm.library.ucdavis.edu"
+        - name : "GATEWAY_HTTP_ENABLED"
+          value : "false"
+        - name: METRICS_ENABLED
+          value: "true"
+        - name: METRICS_EXPORT_GC
+          value: "true"
+        - name: PROXY_TLS_CERT
+          value: "/etc/pgfarm/certs/pgfarm.library.ucdavis.edu/ssl-pgfarm.crt"
+        - name: PROXY_TLS_KEY
+          value: "/etc/pgfarm/certs/pgfarm.library.ucdavis.edu/ssl-pgfarm.key"
+        - name: PROXY_TLS_ENABLED
+          value: "true"
+        volumeMounts:
+          - mountPath: /etc/pgfarm/certs/pgfarm.library.ucdavis.edu
+            name: pgfarm-ssl
+      volumes:
+      - name: pgfarm-ssl
+        secret:
+          secretName: pgfarm-ssl

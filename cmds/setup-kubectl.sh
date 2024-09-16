@@ -12,6 +12,7 @@ CURRENT_CONTEXT=$(kubectl config current-context)
 
 if [[ $LOCAL_DEV == "true" ]]; then
   kubectl config use-context docker-desktop
+  kubectl config set-context --current --namespace=pg-farm
 else 
 
   K8S_USER=$(kubectl auth whoami -o=jsonpath="{.status.userInfo.username}")

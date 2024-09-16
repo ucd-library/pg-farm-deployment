@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: admin-db
+spec:
+  template: 
+    spec:
+      containers:
+      - name: pg-helper
+        volumeMounts:
+        - name: gcs-fuse
+          mountPath: /backups     
+      volumes:
+      - name: gcs-fuse
+        emptyDir: {}

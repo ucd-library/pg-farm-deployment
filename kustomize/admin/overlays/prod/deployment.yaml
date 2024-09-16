@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin
+spec:
+  template:
+    spec:
+      containers:
+      - name: admin
+        image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:main
+        env:
+        - name : "APP_URL"
+          value : "https://pgfarm.library.ucdavis.edu"

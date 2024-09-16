@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+spec:
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - name: gateway
+        image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:sandbox
+        imagePullPolicy: Always
+        command: ["/services/start", "gateway"]
+        env:
+        - name: LOG_LEVEL
+          value: "info"
+        - name: PROXY_DEBUG
+          value: "false"
+        - name : "GOOGLE_APPLICATION_CREDENTIALS"
+          value : "/etc/google/service-account.json"
+        - name: SERVICE_NAME
+          value: "gateway"
+        envFrom:
+        - secretRef:
+            name: app-env
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "2"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+        volumeMounts:
+          - mountPath: /etc/google
+            name: service-account
+      nodeSelector:
+        intendedfor: services
+      volumes:
+      - name: service-account
+        secret:
+          secretName: service-account

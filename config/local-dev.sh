@@ -1,0 +1,1 @@
+K8S_NAMESPACE=pg-farm

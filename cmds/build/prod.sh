@@ -11,7 +11,8 @@ $DOCKER_BUILD \
   --build-arg PG_FARM_REPO_TAG=${BRANCH_TAG_NAME} \
   --build-arg PG_FARM_REPO_HASH=${SHORT_SHA} \
   --build-arg BUILD_DATETIME=${BUILD_DATETIME} \
-  services
+  --file services/Dockerfile \
+  .
 # push $PG_FARM_SERVICE_IMAGE
 
 

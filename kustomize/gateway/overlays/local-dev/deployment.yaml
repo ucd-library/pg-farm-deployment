@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+spec:
+  template:
+    spec:
+      containers:
+      - name: gateway
+        env:
+        - name: PROXY_DEBUG
+          value: "false"
+        - name: LOG_LEVEL
+          value: "debug"
+        - name : "APP_URL"
+          value : "http://localhost:3000"
+        - name : "GATEWAY_HTTP_ENABLED"
+          value : "true"
+        - name: METRICS_ENABLED
+          value: "false"
+        - name: METRICS_EXPORT_GC
+          value: "false"
+        - name : "K8S_PLATFORM"
+          value: "docker-desktop"
+        volumeMounts:
+        - name: kubeconfig
+          mountPath: /root/.kube
+      volumes:
+        - name: kubeconfig
+          configMap:
+            name: kubeconfig

@@ -61,7 +61,7 @@ GCS_BACKUP_BUCKET=app-database-backups
 
 
 ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
+YAML_DIR=$(realpath $ROOT_DIR/../kustomize)
 
 if [[ $LOCAL_DEV == 'true' ]]; then
   source $ROOT_DIR/local-dev.sh

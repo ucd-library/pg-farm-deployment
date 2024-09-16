@@ -1,0 +1,37 @@
+[
+  {
+    "name" : "src-administration",
+    "containerPath" : "/services/administration",
+    "hostPath" : "../../../pg-farm/services/administration"
+  },
+  {
+    "name" : "src-client",
+    "containerPath" : "/services/client",
+    "hostPath" : "../../../pg-farm/services/client"
+  },
+  {
+    "name" : "src-gateway",
+    "containerPath" : "/services/gateway",
+    "hostPath" : "../../../pg-farm/services/gateway"
+  },
+  {
+    "name" : "src-health-probe",
+    "containerPath" : "/services/health-probe",
+    "hostPath" : "../../../pg-farm/services/health-probe"
+  },
+  {
+    "name" : "src-pg-helpers",
+    "containerPath" : "/services/pg-helpers",
+    "hostPath" : "../../../pg-farm/services/pg-helpers"
+  },
+  {
+    "name" : "src-lib",
+    "containerPath" : "/services/lib",
+    "hostPath" : "../../../pg-farm/services/lib"
+  },
+  {
+    "name" : "src-models",
+    "containerPath" : "/services/models",
+    "hostPath" : "../../../pg-farm/services/models"
+  }
+]
