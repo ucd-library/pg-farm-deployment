@@ -30,6 +30,11 @@
     "hostPath" : "../../../pg-farm/services/lib"
   },
   {
+    "name" : "src-tools",
+    "containerPath" : "/tools/lib",
+    "hostPath" : "../../../pg-farm/tools/lib"
+  },
+  {
     "name" : "src-models",
     "containerPath" : "/services/models",
     "hostPath" : "../../../pg-farm/services/models"
