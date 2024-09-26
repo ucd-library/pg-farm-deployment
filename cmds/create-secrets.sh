@@ -12,15 +12,8 @@ fi
 source ./set-environment.sh $1
 source ../config/config.sh $1
 
-./setup-kubectl.sh $1
+cork-kube init $1
 
-K8S_NAMESPACE=default
-if [[ $LOCAL_DEV == "true" ]]; then
-  K8S_NAMESPACE=pg-farm
-fi
-
-
-gcloud config set project ${GC_PROJECT_ID}
 
 gcloud secrets versions access latest --secret=app-service-account > $SECRET_DIR/service-account.json
 gcloud secrets versions access latest --secret=app-env > $SECRET_DIR/env
@@ -31,12 +24,12 @@ if [[ $LOCAL_DEV != "true" ]]; then
 fi
 
 
-kubectl delete secret app-env -n $K8S_NAMESPACE || true
-kubectl create secret generic app-env -n $K8S_NAMESPACE \
+kubectl delete secret app-env || true
+kubectl create secret generic app-env  \
   --from-env-file=$SECRET_DIR/env
 
-kubectl delete secret service-account -n $K8S_NAMESPACE || true
-kubectl create secret generic service-account -n $K8S_NAMESPACE \
+kubectl delete secret service-account || true
+kubectl create secret generic service-account \
  --from-file=service-account.json=$SECRET_DIR/service-account.json || true
 
 if [[ $LOCAL_DEV == "true" ]]; then
@@ -49,11 +42,11 @@ if [[ $LOCAL_DEV == "true" ]]; then
     --clusterrole=cluster-admin \
     --serviceaccount=pg-farm:default || true
 
-  kubectl delete configmap kubeconfig -n $K8S_NAMESPACE || true
-  kubectl create configmap kubeconfig --from-file=$SECRET_DIR/kubeconfig -n $K8S_NAMESPACE || true
+  kubectl delete configmap kubeconfig|| true
+  kubectl create configmap kubeconfig --from-file=$SECRET_DIR/kubeconfig || true
   exit 0
 fi
-kubectl delete secret pgfarm-ssl -n $K8S_NAMESPACE || true
-kubectl create secret generic pgfarm-ssl -n $K8S_NAMESPACE \
+kubectl delete secret pgfarm-ssl || true
+kubectl create secret generic pgfarm-ssl \
  --from-file=ssl-pgfarm.crt=$SECRET_DIR/ssl-pgfarm.crt \
  --from-file=ssl-pgfarm.key=$SECRET_DIR/ssl-pgfarm.key || true

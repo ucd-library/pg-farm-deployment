@@ -65,8 +65,8 @@ YAML_DIR=$(realpath $ROOT_DIR/../kustomize)
 
 if [[ $LOCAL_DEV == 'true' ]]; then
   source $ROOT_DIR/local-dev.sh
-elif [[ $BRANCH_NAME == "main" ]]; then
+elif [[ $BUILD_ENV == "prod" ]]; then
   source $ROOT_DIR/prod.sh
-elif [[ $BRANCH_NAME == "dev" ]]; then
+elif [[ $BUILD_ENV == "dev" ]]; then
   source $ROOT_DIR/dev.sh
 fi

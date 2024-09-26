@@ -1,0 +1,18 @@
+{
+  "project" : "pgfarm",
+
+  "environments" : {
+    "local-dev" : {
+      "project" : "pgfarm-419213",
+      "platform" : "docker-desktop",
+      "namespace" : "pg-farm"
+    },
+    "sandbox" : {
+      "platform" : "gke",
+      "namespace" : "default",
+      "cluster" : "pgfarm",
+      "zone" : "us-central1-c",
+      "project" : "pgfarm-419213"
+    }
+  }
+}

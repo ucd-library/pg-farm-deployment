@@ -110,7 +110,7 @@
       {
         "label": "Init kubectl",
         "type": "shell",
-        "command": "./cmds/setup-kubectl.sh local-dev",
+        "command": "cork-kube init local-dev",
         "presentation": {
             "echo": true,
             "reveal": "always",

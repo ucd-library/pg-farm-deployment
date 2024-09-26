@@ -9,7 +9,7 @@ TAG=${1:-main}
 
 source ./set-environment.sh local-dev
 source ./set-tag.sh $TAG
-source ./setup-kubectl.sh local-dev
+cork-kube init local-dev -c ..
 source ../config/config.sh local-dev
 
 EXISTS=$(kubectl get namespace $K8S_NAMESPACE -o jsonpath='{.metadata.name}' || true)
