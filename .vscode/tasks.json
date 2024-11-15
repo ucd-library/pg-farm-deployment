@@ -26,7 +26,7 @@
       {
         "label": "Open Service Shell",
         "type": "shell",
-        "command": "./cmds/local-dev.sh exec ${input:podName}",
+        "command": "cork-kube pod exec local-dev ${input:podName}",
         "presentation": {
             "echo": true,
             "reveal": "always",
@@ -40,7 +40,7 @@
       {
           "label": "Generate Dashboard Token",
           "type": "shell",
-          "command": "./cmds/local-dev.sh dashboard-token",
+          "command": "cork-kube dashboard token",
           "presentation": {
               "echo": true,
               "reveal": "always",
@@ -96,7 +96,7 @@
       {
         "label": "Client Watch",
         "type": "shell",
-        "command": "./cmds/local-dev.sh exec client \"npm run client-watch\"",
+        "command": "cork-kube pod exec local-dev client \"npm run client-watch\"",
         "presentation": {
             "echo": true,
             "reveal": "always",
@@ -124,7 +124,7 @@
       {
         "label": "Deploy Pods",
         "type": "shell",
-        "command": "./cmds/local-dev.sh start",
+        "command": "cork-kube up local-dev",
         "presentation": {
             "echo": true,
             "reveal": "always",
@@ -138,7 +138,7 @@
       {
         "label": "Build Images",
         "type": "shell",
-        "command": "./cmds/local-dev.sh build",
+        "command": "./cmds/build-local-dev.sh",
         "presentation": {
             "echo": true,
             "reveal": "always",
@@ -152,7 +152,7 @@
       {
         "label": "Remove all pods and services",
         "type": "shell",
-        "command": "./cmds/local-dev.sh stop",
+        "command": "cork-kube down local-dev",
         "presentation": {
             "echo": true,
             "reveal": "always",

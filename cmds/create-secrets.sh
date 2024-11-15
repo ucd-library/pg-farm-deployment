@@ -12,7 +12,7 @@ fi
 source ./set-environment.sh $1
 source ../config/config.sh $1
 
-cork-kube init $1
+cork-kube init $1 -c ../
 
 
 gcloud secrets versions access latest --secret=app-service-account > $SECRET_DIR/service-account.json

@@ -12,6 +12,8 @@ spec:
           value : "http://localhost:3000"
         - name : "K8S_PLATFORM"
           value: "docker-desktop"
+        - name : "PG_INSTANCE_IMAGE"
+          value : ""
         volumeMounts:
         - name: kubeconfig
           mountPath: /root/.kube
