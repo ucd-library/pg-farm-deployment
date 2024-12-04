@@ -70,11 +70,11 @@
       "edit" : [
         {
           "jsonpath": "spec.template.spec.containers[*].image", 
-          "value": "localhost/local-dev/pgfarm-service:local-dev"
+          "value": "localhost/local-dev/pgfarm-service:sandbox"
         },
         {
           "jsonpath": "spec.template.spec.containers[*].env[?(@.name=='PG_INSTANCE_IMAGE')].value", 
-          "value": "localhost/local-dev/pgfarm-instance:local-dev"
+          "value": "localhost/local-dev/pgfarm-instance:sandbox"
         }
       ]
     },
