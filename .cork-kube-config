@@ -7,7 +7,7 @@
       "platform" : "docker-desktop",
       "namespace" : "pg-farm"
     },
-    "sandbox" : {
+    "prod" : {
       "platform" : "gke",
       "namespace" : "default",
       "cluster" : "pgfarm",
@@ -105,6 +105,7 @@
     },
     {
       "path" : "kustomize/admin",
+      "group" : "base",
       "environments" : {
         "local-dev" : {
           "template" : ["local-dev", "pgfarm"]
@@ -113,6 +114,7 @@
     },
     {
       "path" : "kustomize/client",
+      "group" : "base",
       "environments" : {
         "local-dev" : {
           "template" : ["local-dev", "pgfarm"]
@@ -129,6 +131,7 @@
     },
     {
       "path" : "kustomize/health-probe",
+      "group" : "base",
       "environments" : {
         "local-dev" : {
           "template" : ["local-dev", "pgfarm"]
