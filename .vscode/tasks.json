@@ -96,7 +96,7 @@
       {
         "label": "Client Watch",
         "type": "shell",
-        "command": "cork-kube pod exec local-dev client \"npm run client-watch\"",
+        "command": "cork-kube pod exec local-dev client -e \"npm run client-watch\"",
         "presentation": {
             "echo": true,
             "reveal": "always",

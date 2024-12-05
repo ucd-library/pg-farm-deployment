@@ -13,7 +13,7 @@ spec:
         - name : "K8S_PLATFORM"
           value: "docker-desktop"
         - name : "PG_INSTANCE_IMAGE"
-          value : ""
+          value : "localhost/local-dev/postgres:16"
         volumeMounts:
         - name: kubeconfig
           mountPath: /root/.kube

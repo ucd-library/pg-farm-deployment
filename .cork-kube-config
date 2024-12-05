@@ -70,11 +70,7 @@
       "edit" : [
         {
           "jsonpath": "spec.template.spec.containers[*].image", 
-          "value": "localhost/local-dev/pgfarm-service:sandbox"
-        },
-        {
-          "jsonpath": "spec.template.spec.containers[*].env[?(@.name=='PG_INSTANCE_IMAGE')].value", 
-          "value": "localhost/local-dev/pgfarm-instance:sandbox"
+          "value": "localhost/local-dev/pgfarm-service:local-dev"
         }
       ]
     },
@@ -103,13 +99,7 @@
       "path" : "kustomize/admin-db",
       "environments" : {
         "local-dev" : {
-          "template" : "local-dev",
-          "edit" : [
-            {
-              "jsonpath": "spec.template.spec.containers[?(@.name=='pg-helper')].image", 
-              "value": "localhost/local-dev/pgfarm-service:local-dev"
-            }
-          ]
+          "template" : "local-dev"
         }
       }
     },
