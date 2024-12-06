@@ -10,7 +10,7 @@ spec:
         # command: ["/bin/bash", "-c", "tail -f /dev/null"]
         env:
         - name: PROXY_DEBUG
-          value: "true"
+          value: "false"
         - name: LOG_LEVEL
           value: "debug"
         - name : "APP_URL"
