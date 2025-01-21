@@ -9,7 +9,7 @@ spec:
       - name: admin
         env:
         - name : "APP_URL"
-          value : "http://localhost:3000"
+          value : "http://localhost:30000"
         - name : "K8S_PLATFORM"
           value: "docker-desktop"
         - name : "PG_INSTANCE_IMAGE"

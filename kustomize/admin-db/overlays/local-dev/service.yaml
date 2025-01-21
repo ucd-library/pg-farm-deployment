@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: admin-db
 spec:
-  # this enables direct access to the pod from within the cluster
-  # and no load balancing is done
-  clusterIP: None 
+  type: NodePort
   selector:
     app: admin-db
   ports:
   - name: postgres
     protocol: TCP
+    nodePort: 30544
     port: 5432
+    targetPort: 5432

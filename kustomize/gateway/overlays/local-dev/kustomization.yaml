@@ -8,3 +8,6 @@ patches:
   - path: deployment.yaml
     target:
       kind: Deployment
+  - path: service.yaml
+    target:
+      kind: Service

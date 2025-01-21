@@ -8,3 +8,13 @@ patches:
   - path: statefulset.yaml
     target:
       kind: StatefulSet
+  - target:
+      kind: Service
+    patch: |-
+      - op: remove
+        path: /spec/clusterIP
+        target:
+          kind: Service
+  - path: service.yaml
+    target:
+      kind: Service
