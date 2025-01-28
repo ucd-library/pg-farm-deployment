@@ -137,6 +137,9 @@
           "template" : ["local-dev", "pgfarm"]
         }
       }
+    },
+    {
+      "path" : "kustomize/networking"
     }
   ]
 }

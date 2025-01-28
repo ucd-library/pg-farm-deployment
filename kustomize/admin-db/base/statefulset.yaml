@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: admin-db
+        pgfarm-type: core-service
     spec:
       containers:
       - name: admin-db

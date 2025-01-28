@@ -17,6 +17,7 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} \
   --disk-size 50GB \
   --release-channel=regular \
   --machine-type e2-standard-2 \
+  --enable-network-policy \
   --workload-pool=${GC_PROJECT_ID}.svc.id.goog \
   --node-labels=intendedfor=services
 

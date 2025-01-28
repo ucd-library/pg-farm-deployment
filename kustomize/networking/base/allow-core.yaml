@@ -1,0 +1,17 @@
+# Network Policy to Deny Communication from pgfarm instance databases to core pgfarm services
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-core
+spec:
+  podSelector:
+    matchLabels:
+      pgfarm-type: core-service
+  policyTypes:
+    - Ingress # Define ingress rules
+  ingress:
+    - from:
+        # Allow traffic only from specific sources (e.g., other trusted apps, services)
+        - podSelector:
+            matchLabels:
+              pgfarm-type: core-service

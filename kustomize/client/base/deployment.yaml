@@ -10,6 +10,7 @@ spec:
     metadata:
       labels:
         app: client
+        pgfarm-type: core-service
     spec:
       containers:
       - name: client
