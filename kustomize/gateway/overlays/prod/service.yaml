@@ -8,6 +8,6 @@ metadata:
     # https://cloud.google.com/load-balancing/docs/passthrough-network-load-balancer
     cloud.google.com/l4-rbs: "enabled"
 spec:
-  loadBalancerIP: "0.0.0.0"
+  loadBalancerIP: "34.170.150.232"
   # Use local traffic policy to preserve client source IP
   externalTrafficPolicy: Local

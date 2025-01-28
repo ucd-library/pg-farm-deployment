@@ -10,7 +10,7 @@ spec:
     metadata:
       labels:
         app: gateway
-        pgfarm-type: core-service
+        pgfarm-type: gateway
     spec:
       containers:
       - name: gateway
