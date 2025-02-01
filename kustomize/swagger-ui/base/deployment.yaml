@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swagger-ui
+spec:
+  selector:
+    matchLabels:
+      app: swagger-ui
+  template:
+    metadata:
+      labels:
+        app: swagger-ui
+        pgfarm-type: core-service
+    spec:
+      containers:
+      - name: service
+        image: swaggerapi/swagger-ui:v5.18.3
+        imagePullPolicy: Always
+        env:
+        - name: BASE_URL
+          value: "/swagger-ui"
+        - name: QUERY_CONFIG_ENABLED
+          value: "true"
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "2"
+          requests:
+            memory: "500Mi"
+            cpu: "250m"

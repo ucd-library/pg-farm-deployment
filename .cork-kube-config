@@ -104,6 +104,9 @@
       }
     },
     {
+      "path" : "kustomize/swagger-ui"
+    },
+    {
       "path" : "kustomize/admin",
       "group" : "base",
       "environments" : {

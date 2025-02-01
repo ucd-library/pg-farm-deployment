@@ -18,3 +18,5 @@ spec:
           value: "docker-desktop"
         - name : "PG_INSTANCE_IMAGE"
           value : "localhost/local-dev/postgres:16"
+        - name: SWAGGER_UI_TESTING_DOMAIN
+          value: "http://pgfarm.local:30000"
