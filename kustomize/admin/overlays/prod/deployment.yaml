@@ -6,8 +6,8 @@ spec:
   template:
     spec:
       containers:
-      - name: admin
-        image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:main
-        env:
-        - name : "APP_URL"
-          value : "https://pgfarm.library.ucdavis.edu"
+        - name: admin
+          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.2.0
+          env:
+            - name: APP_URL
+              value: https://pgfarm.library.ucdavis.edu

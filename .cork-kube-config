@@ -142,6 +142,9 @@
       }
     },
     {
+      "path" : "kustomize/image-prepuller"
+    },
+    {
       "path" : "kustomize/networking"
     }
   ]

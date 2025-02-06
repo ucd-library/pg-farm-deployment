@@ -6,16 +6,16 @@ spec:
   template:
     metadata:
       annotations:
-        gke-gcsfuse/volumes: "true"   
+        gke-gcsfuse/volumes: 'true'
     spec:
       containers:
-      - name: pg-helper
-        image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:main
-        volumeMounts:
-        - name: gcs-fuse
-          mountPath: /backups     
+        - name: pg-helper
+          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.2.0
+          volumeMounts:
+            - name: gcs-fuse
+              mountPath: /backups
       serviceAccountName: pgfarm-ksa
       volumes:
-      - name: gcs-fuse
-        persistentVolumeClaim:
-          claimName: gcs-fuse-pvc
+        - name: gcs-fuse
+          persistentVolumeClaim:
+            claimName: gcs-fuse-pvc

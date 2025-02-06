@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: prepuller
+spec:
+  selector:
+    matchLabels:
+      name: prepuller
+  template:
+    metadata:
+      labels:
+        name: prepuller
+    spec:
+      initContainers:
+        - name: prepuller-base
+          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.2.0
+          command:
+            - sh
+            - '-c'
+            - 'true'
+        - name: prepuller-pg
+          image: us-west1-docker.pkg.dev/digital-ucdavis-edu/pub/postgres:16
+          command:
+            - sh
+            - '-c'
+            - 'true'
+      containers:
+        - name: pause
+          image: gcr.io/google_containers/pause:3.2
