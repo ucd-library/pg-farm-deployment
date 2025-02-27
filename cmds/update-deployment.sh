@@ -81,12 +81,12 @@ if [[ "$COMMIT_CHANGES" == "y" ]]; then
   echo -e "\nCommitting changes to git"
 
   git add --all
-  git commit -m "Updated $ENVIRONMENT to version $DAMS_VERSION"
+  git commit -m "Updated $ENVIRONMENT to version $PGFARM_VERSION"
   git pull
   git push
 
   echo ""
-  echo "Done updating deployment $ENVIRONMENT to version $DAMS_VERSION"
+  echo "Done updating deployment $ENVIRONMENT to version $PGFARM_VERSION"
 else
   echo ""
   echo "Changes not committed to git."
