@@ -54,7 +54,7 @@ JSON_DATA=$(curl -s $PGFARM_BUILD_REGISTRY_URL)
 
 POSTGRES_VERSION=$(echo $JSON_DATA | jq -r ".builds[\"$PGFARM_VERSION\"].postgres")
 
-if [[ "$POSTGRES_VERSION" == "" ]]; then
+if [[ "$POSTGRES_VERSION" == "" || "$POSTGRES_VERSION" == "null" ]]; then
   echo "Error: Version $PGFARM_VERSION not found in the JSON data."
   exit 1
 fi

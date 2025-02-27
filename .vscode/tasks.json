@@ -40,7 +40,7 @@
       {
           "label": "Generate Dashboard Token",
           "type": "shell",
-          "command": "cork-kube dashboard token",
+          "command": "cork-kube dashboard token local-dev",
           "presentation": {
               "echo": true,
               "reveal": "always",
