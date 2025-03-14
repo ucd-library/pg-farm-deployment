@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.3.1
+          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.3.2
           env:
             - name: PROXY_DEBUG
               value: 'false'

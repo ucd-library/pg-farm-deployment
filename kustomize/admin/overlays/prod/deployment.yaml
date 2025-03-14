@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
         - name: admin
-          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.3.1
+          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.3.2
           env:
             - name: APP_URL
               value: https://pgfarm.library.ucdavis.edu
