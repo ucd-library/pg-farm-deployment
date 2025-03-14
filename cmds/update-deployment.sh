@@ -61,6 +61,8 @@ fi
 
 echo -e "Updating PG Farm $ENVIRONMENT to version PG Farm: $PGFARM_VERSION Postgres: $POSTGRES_VERSION\n"
 
+# Gateway
+edit gateway deployment "$PGFARM_REGISTRY/$PGFARM_IMAGE_NAME:$PGFARM_VERSION" gateway $ENVIRONMENT
 # Admin
 edit admin deployment "$PGFARM_REGISTRY/$PGFARM_IMAGE_NAME:$PGFARM_VERSION" admin $ENVIRONMENT
 # Admin DB
