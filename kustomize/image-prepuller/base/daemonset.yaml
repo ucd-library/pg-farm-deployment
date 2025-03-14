@@ -13,7 +13,7 @@ spec:
     spec:
       initContainers:
         - name: prepuller-base
-          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.3.2
+          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.3.3
           command:
             - sh
             - '-c'
