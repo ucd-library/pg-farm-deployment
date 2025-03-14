@@ -12,7 +12,7 @@
       {
           "label": "Proxy Dashboard",
           "type": "shell",
-          "command": "cork-kube dashboard proxy",
+          "command": "cork-kube dashboard proxy local-dev",
           "presentation": {
               "echo": true,
               "reveal": "always",

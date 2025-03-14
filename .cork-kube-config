@@ -59,14 +59,6 @@
         {
           "gcsmName" : "ssl-pgfarm-key",
           "k8sProperty" : "ssl-pgfarm.key"
-        },
-        {
-          "gcsmName" : "ssl-pgfarm-wildcard-cert",
-          "k8sProperty" : "ssl-pgfarm-wildcard.crt"
-        },
-        {
-          "gcsmName" : "ssl-pgfarm-wildcard-key",
-          "k8sProperty" : "ssl-pgfarm-wildcard.key"
         }
       ]
     }]
