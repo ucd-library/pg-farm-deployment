@@ -71,7 +71,7 @@
       "edit" : [
         {
           "jsonpath": "spec.template.spec.containers[*].image", 
-          "value": "localhost/local-dev/pgfarm-service:local-dev"
+          "value": "${__LOCAL_DEV_REGISTRY}/pgfarm-service:local-dev"
         }
       ]
     },

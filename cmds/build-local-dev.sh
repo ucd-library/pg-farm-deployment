@@ -7,8 +7,8 @@ if [[ $BUILD_PG == 'true' || $1 == 'buildpg' ]]; then
     --no-cache-from
 fi
 
-echo "pulling latest pg image"
-docker pull postgres:16
+# echo "pulling latest pg image"
+# docker pull postgres:16
 
 echo "running cork-kube build"
 cork-kube build exec \
