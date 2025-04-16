@@ -97,10 +97,34 @@
       }
     },
     {
+      "path" : "kustomize/env",
+      "environments" : {
+        "local-dev" : {
+          "template" : "local-dev",
+          "edit" : [
+            {
+              "jsonpath": "data.PG_INSTANCE_IMAGE", 
+              "value": "${__LOCAL_DEV_REGISTRY}/postgres:16"
+            }
+          ]
+        }
+      }
+    },
+    {
       "path" : "kustomize/admin-db",
       "environments" : {
         "local-dev" : {
-          "template" : "local-dev"
+          "template" : "local-dev",
+          "edit" : [
+            {
+              "jsonpath": "spec.template.spec.containers[?(@.name==\"admin-db\")].image", 
+              "value": "${__LOCAL_DEV_REGISTRY}/postgres:16"
+            },
+            {
+              "jsonpath": "spec.template.spec.containers[?(@.name==\"pg-helper\")].image", 
+              "value": "${__LOCAL_DEV_REGISTRY}/pgfarm-service:local-dev"
+            }
+          ]
         }
       }
     },

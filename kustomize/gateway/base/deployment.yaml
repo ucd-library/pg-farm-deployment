@@ -18,17 +18,13 @@ spec:
         imagePullPolicy: Always
         command: ["/services/start", "gateway"]
         env:
-        - name: LOG_LEVEL
-          value: "info"
-        - name: PROXY_DEBUG
-          value: "false"
-        - name : "GOOGLE_APPLICATION_CREDENTIALS"
-          value : "/etc/google/service-account.json"
         - name: SERVICE_NAME
           value: "gateway"
         envFrom:
         - secretRef:
             name: app-env
+        - configMapRef:
+            name: app-config
         resources:
           limits:
             memory: "2Gi"

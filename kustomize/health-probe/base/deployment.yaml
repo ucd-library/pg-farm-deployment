@@ -18,15 +18,13 @@ spec:
         imagePullPolicy: Always
         command: ["/services/start", "health-probe"]
         env:
-        - name: LOG_LEVEL
-          value: "info"
-        - name : "GOOGLE_APPLICATION_CREDENTIALS"
-          value : "/etc/google/service-account.json"
         - name: SERVICE_NAME
           value: "health-probe"
         envFrom:
         - secretRef:
             name: app-env
+        - configMapRef:
+            name: app-config
         resources:
           limits:
             memory: "1Gi"

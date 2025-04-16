@@ -8,23 +8,6 @@ spec:
       containers:
       - name: gateway
         # command: ["/bin/bash", "-c", "tail -f /dev/null"]
-        env:
-        - name: PROXY_DEBUG
-          value: "true"
-        - name: LOG_LEVEL
-          value: "info"
-        - name : "APP_URL"
-          value : "http://localhost:3000"
-        - name : "GATEWAY_HTTP_ENABLED"
-          value : "true"
-        - name: METRICS_ENABLED
-          value: "false"
-        - name: METRICS_EXPORT_GC
-          value: "false"
-        - name : "K8S_PLATFORM"
-          value: "docker-desktop"
-        - name : "PG_INSTANCE_IMAGE"
-          value : "localhost/local-dev/postgres:16"
         volumeMounts:
         - name: kubeconfig
           mountPath: /root/.kube

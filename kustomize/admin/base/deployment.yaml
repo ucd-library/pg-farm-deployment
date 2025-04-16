@@ -17,12 +17,9 @@ spec:
         imagePullPolicy: Always
         image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:sandbox
         command: ["/services/start", "administration"]
-        env:
-        - name: LOG_LEVEL
-          value: "info"
-        - name : "GOOGLE_APPLICATION_CREDENTIALS"
-          value : "/etc/google/service-account.json"
         envFrom:
+        - configMapRef:
+            name: app-config
         - secretRef:
             name: app-env
         resources:

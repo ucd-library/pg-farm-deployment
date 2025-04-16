@@ -9,8 +9,6 @@ spec:
         - name: admin
           image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.3.6
           env:
-            - name: APP_URL
-              value: https://pgfarm.library.ucdavis.edu
             - name: CA_CHAIN_PEM
               valueFrom:
                 secretKeyRef:

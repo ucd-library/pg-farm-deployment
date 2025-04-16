@@ -18,21 +18,13 @@ spec:
         imagePullPolicy: Always
         command: ["/services/start", "client"]
         env:
-        - name: LOG_LEVEL
-          value: "info"
-        - name : "GOOGLE_APPLICATION_CREDENTIALS"
-          value : "/etc/google/service-account.json"
         - name: SERVICE_NAME
           value: "client"
-        - name : "CLIENT_ERROR_REPORTING_ENABLED"
-          value : "true"
-        - name : "CLIENT_ERROR_REPORTING_URL"
-          value : "https://client-error-reporter-akwemh35fa-uw.a.run.app"
-        - name : "CLIENT_ERROR_REPORTING_KEY"
-          value : "6Ff+UkvNLivtnQ"
         envFrom:
         - secretRef:
             name: app-env
+        - configMapRef:
+            name: app-config
         resources:
           limits:
             memory: "2Gi"
