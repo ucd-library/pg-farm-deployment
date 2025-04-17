@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
         - name: pg-helper
-          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.3.6
+          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.4.0
           volumeMounts:
             - name: gcs-fuse
               mountPath: /backups
