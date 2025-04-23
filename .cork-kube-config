@@ -47,6 +47,11 @@
         "fromEnvFile" : true
       },
       {
+        "k8sName" : "oidc-config",
+        "fromEnvFile" : true,
+        "gcsmName" : "oidc-production"
+      },
+      {
         "k8sName" : "service-account",
         "mappings" : [{
           "gcsmName" : "app-service-account",
