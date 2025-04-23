@@ -21,6 +21,8 @@ spec:
         - configMapRef:
             name: app-config
         - secretRef:
+            name: oidc-config
+        - secretRef:
             name: app-env
         resources:
           limits:
