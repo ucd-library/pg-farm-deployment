@@ -22,6 +22,8 @@ spec:
           value: "client"
         envFrom:
         - secretRef:
+            name: oidc-config
+        - secretRef:
             name: app-env
         - configMapRef:
             name: app-config
