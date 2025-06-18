@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.5.0
+          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.5.1
           env:
             - name: APP_URL
               value: https://pgfarm.library.ucdavis.edu
@@ -15,3 +15,5 @@ spec:
               value: 'true'
             - name: METRICS_EXPORT_GC
               value: 'true'
+            - name: CLIENT_ENV
+              value: prod
