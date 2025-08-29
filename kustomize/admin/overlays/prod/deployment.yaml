@@ -8,10 +8,6 @@ spec:
       containers:
         - name: admin
           image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.6.1
-          command:
-            - bash
-            - '-c'
-            - tail -f /dev/null
           env:
             - name: CA_CHAIN_PEM
               valueFrom:
