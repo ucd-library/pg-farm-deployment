@@ -26,7 +26,7 @@ gcloud beta container node-pools create instance-pool \
   --zone ${GKE_CLUSTER_ZONE} \
   --machine-type e2-standard-8 \
   --num-nodes 1 \
-  --disk-size 50GB \
+  --disk-size 150GB \
   --spot \
   --workload-metadata=GKE_METADATA \
   --node-labels=intendedfor=instance-pool \

@@ -34,7 +34,7 @@ spec:
               cpu: '2'
             requests:
               memory: 500Mi
-              cpu: 250m
+              cpu: 200m
           ports:
             - containerPort: 5432
           volumeMounts:

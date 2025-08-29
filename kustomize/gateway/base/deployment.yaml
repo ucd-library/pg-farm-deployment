@@ -31,7 +31,7 @@ spec:
             cpu: "2"
           requests:
             memory: "256Mi"
-            cpu: "150m"
+            cpu: "100m"
         volumeMounts:
           - mountPath: /etc/google
             name: service-account
