@@ -14,7 +14,7 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} \
   --zone ${GKE_CLUSTER_ZONE} \
   --addons GcsFuseCsiDriver \
   --num-nodes 3 \
-  --disk-size 50GB \
+  --disk-size 100GB \
   --release-channel=regular \
   --machine-type e2-standard-2 \
   --enable-network-policy \
@@ -24,7 +24,7 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} \
 gcloud beta container node-pools create instance-pool \
   --cluster ${GKE_CLUSTER_NAME} \
   --zone ${GKE_CLUSTER_ZONE} \
-  --machine-type e2-standard-8 \
+  --machine-type n2-standard-8 \
   --num-nodes 1 \
   --disk-size 150GB \
   --spot \
