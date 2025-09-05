@@ -18,6 +18,7 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} \
   --release-channel=regular \
   --machine-type e2-standard-2 \
   --enable-network-policy \
+  --enable-image-streaming \
   --workload-pool=${GC_PROJECT_ID}.svc.id.goog \
   --node-labels=intendedfor=services
 
