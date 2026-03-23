@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: gateway
 spec:
-  replicas: 1
+  replicas: 3
   template:
     spec:
       containers:
@@ -14,7 +14,7 @@ spec:
               name: pgfarm-ssl
           env:
             - name: LOG_LEVEL
-              value: debug
+              value: info
       volumes:
         - name: pgfarm-ssl
           secret:
