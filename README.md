@@ -15,6 +15,7 @@ Deployment repo for PG Farm
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [yq](https://github.com/mikefarah/yq)
 
 ### Setup Kubernetes locally
 
@@ -23,7 +24,7 @@ Deployment repo for PG Farm
 3. Deploy the dashboard
 
 ```bash
-./cmds/local-dev.sh create-dashboard
+cork-kube dashboard create local-dev
 ```
 
 This will create the dashboard deployment inside kubernetes as well as create the k8s service account for the dashboard.  Note, follow the instructions printed by the above command about editing dashboard configs `--token-ttl` flag.
@@ -36,7 +37,7 @@ Then navigate to http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/se
 
 5. Get the token for the dashboard
 
-Run `./cmds/local-dev.sh dashboard-token` or VS Code task `Generate Dashboard Token`. Use token to login to the dashboard.
+Run `cork-kube dashboard token local-dev` or VS Code task `Generate Dashboard Token`. Use token to login to the dashboard.
 
 **Note.**  Kubectl can speak to any k8s cluster, local or cloud (GKE).  You can ensure you are speaking to the correct cluster by running `kubectl config get-contexts` and `kubectl config use-context [context-name]` to switch between clusters.  For local development you want `kubectl config use-context docker-desktop`.
 
@@ -44,10 +45,12 @@ Run `./cmds/local-dev.sh dashboard-token` or VS Code task `Generate Dashboard To
 
 The application will run under the `pg-farm` kubernetes namespace.  Make sure you use this namespace when running kubectl commands or accessing the dashboard.  The `./cmds/local-dev.sh start` script will automatically create and switch to the `pg-farm` namespace.  Manually you can run `kubectl config set-context --current --namespace=pg-farm` to switch to the namespace.
 
-1. Build the app using `./cmds/local-dev.sh build` or VS Code task `Build Images`
+1. Build the app using VS Code task `Build Base Image`. If running for the first time, use VS Code task `Build All Images`.
 2. Create the k8s secrets using `./cmds/create-secrets.sh local-dev`.  This only needs to be done once.  You will need access to the GCloud secret manager to get the secrets.
-3. Deploy the app using `./cmds/local-dev.sh start` or VS Code task `Deploy Pods`.  Additionally, run this command any time you update the k8s config yaml files and want the changes to take effect.
-4.  For webapp client development, startup the client code Webpack watch process using `./cmds/local-dev.sh exec client "npm run client-watch"` or VS Code task `Client Watch`.  
+3. Deploy the app using VS Code task `Deploy Pods`.  Additionally, run this command any time you update the k8s config yaml files and want the changes to take effect.
+4.  For webapp client development, startup the client code Webpack watch process using VS Code task `Client Watch`. If this is the first time, run `npm i` in `services/client/dev` in main repo.
+
+After doing the initial setup, you can use VS Code task `Run all local-dev tasks` to quickly restart the application.
 
 ### Access the application
 
