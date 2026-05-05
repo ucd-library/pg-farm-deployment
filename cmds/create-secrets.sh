@@ -1,15 +1,19 @@
 #! /bin/bash
 
 set -e
-ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd $ROOT_DIR
+CMDS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd $CMDS_DIR
 
-SECRET_DIR=$ROOT_DIR/../secrets
+SECRET_DIR=$CMDS_DIR/../secrets
 if [[ ! -d $SECRET_DIR ]]; then
   mkdir $SECRET_DIR
 fi
 
-source ./set-environment.sh $1
+# source ./set-environment.sh $1
+if [[ "$1" == "local-dev" ]]; then
+  LOCAL_DEV="true"
+fi
+
 source ../config/config.sh $1
 
 cork-kube init $1 -c ../
@@ -23,6 +27,8 @@ if [[ $LOCAL_DEV != "true" ]]; then
   gcloud secrets versions access latest --secret=ssl-pgfarm-key > $SECRET_DIR/ssl-pgfarm.key
 fi
 
+
+kubectl create namespace pg-farm || true
 
 kubectl delete secret app-env || true
 kubectl create secret generic app-env  \
