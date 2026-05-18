@@ -2,6 +2,10 @@
 
 set -e
 
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+kubectl apply -f $ROOT_DIR/../kustomize/priority/priority.yaml
+
 cork-kube up local-dev
 
 echo -e "==================================================\n"

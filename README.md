@@ -60,6 +60,10 @@ You can expose services, deployments or statefulsets to your host machine using 
 - Access a local PG Farm Postgres instance using `kubectl port-forward svc/gateway-ingress 5432:5432` or VS Code task `Proxy Gateway PG`.  Now `psql` commands to localhost:5432 will be forwarded to the PG Farm instance.
 - Access the admin database: `kubectl port-forward svc/admin-db 5433:5432` or VS Code task `Proxy Admin DB`.  Now `psql` commands to localhost:5433 will be forwarded to the PG Farm instance.
 
+To wire up the `pgfarm` cli to work with your local instance, run the following once:
+- `npm i` and then `npm link` in `pg-farm/tools`
+- `pgfarm config set host http://localhost:30000`
+
 ### Restart Services
 
 If you need to restart a service after a code update, you can do so by running `kubectl rollout restart [type] [name]` ex: `kubectl rollout restart deployment admin`.
