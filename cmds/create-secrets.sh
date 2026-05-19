@@ -14,6 +14,14 @@ if [[ "$1" == "local-dev" ]]; then
   LOCAL_DEV="true"
 fi
 
+if [[ "$1" == "dev" ]]; then
+  SSL_CERT_SECRET=ssl-pgfarm-dev-cert
+  SSL_KEY_SECRET=ssl-pgfarm-dev-key
+else
+  SSL_CERT_SECRET=ssl-pgfarm-cert
+  SSL_KEY_SECRET=ssl-pgfarm-key
+fi
+
 source ../config/config.sh $1
 
 cork-kube init $1 -c ../
@@ -23,8 +31,8 @@ gcloud secrets versions access latest --secret=app-service-account > $SECRET_DIR
 gcloud secrets versions access latest --secret=app-env > $SECRET_DIR/env
 
 if [[ $LOCAL_DEV != "true" ]]; then
-  gcloud secrets versions access latest --secret=ssl-pgfarm-cert > $SECRET_DIR/ssl-pgfarm.crt
-  gcloud secrets versions access latest --secret=ssl-pgfarm-key > $SECRET_DIR/ssl-pgfarm.key
+  gcloud secrets versions access latest --secret=$SSL_CERT_SECRET > $SECRET_DIR/ssl-pgfarm.crt
+  gcloud secrets versions access latest --secret=$SSL_KEY_SECRET > $SECRET_DIR/ssl-pgfarm.key
 fi
 
 

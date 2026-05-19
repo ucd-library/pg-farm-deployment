@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health-probe
+spec:
+  template:
+    spec:
+      containers:
+        - name: health-probe
+          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.7.5

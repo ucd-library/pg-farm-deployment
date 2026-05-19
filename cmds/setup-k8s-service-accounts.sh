@@ -6,10 +6,9 @@
 ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $ROOT_DIR
 
-# source ./set-environment.sh $1
-source ../config/config.sh
+source ../config/config.sh $1
 
-gcloud config set project ${GC_PROJECT_ID}
+# gcloud config set project ${GC_PROJECT_ID}
 
 echo "This script expects the following bucket and google cloud service acount to exist:"
 echo "Bucket: ${GCS_BACKUP_BUCKET}"
@@ -35,3 +34,7 @@ gcloud iam service-accounts add-iam-policy-binding $GC_SA_NAME@$GC_PROJECT_ID.ia
 kubectl annotate serviceaccount ${GKE_KSA_NAME} \
     --namespace default \
     iam.gke.io/gcp-service-account=$GC_SA_NAME@$GC_PROJECT_ID.iam.gserviceaccount.com
+
+kubectl create clusterrolebinding pg-farm-cluster-admin \
+    --clusterrole=cluster-admin \
+    --serviceaccount=pg-farm:default || true

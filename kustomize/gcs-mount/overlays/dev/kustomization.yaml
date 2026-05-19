@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base
+
+patches:
+  - target:
+      kind: PersistentVolume
+      name: gcs-fuse-pv
+    patch: |-
+      - op: replace
+        path: /spec/csi/volumeHandle
+        value: app-database-backups-dev

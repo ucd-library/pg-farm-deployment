@@ -1,16 +1,16 @@
 #! /bin/bash
 
-echo $ROOT_DIR
-if [[ -z $ROOT_DIR ]]; then
-  ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-fi
-echo $ROOT_DIR
-YAML_DIR=$(realpath $ROOT_DIR/../kustomize)
+# echo $ROOT_DIR
+# if [[ -z $ROOT_DIR ]]; then
+  CONFIG_ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# fi
+echo $CONFIG_ROOT_DIR
+YAML_DIR=$(realpath $CONFIG_ROOT_DIR/../kustomize)
 
 if [[ -z "$ENV" ]]; then
   ENV=$1
 fi
-if [[ ! -f "$ROOT_DIR/$ENV.sh" ]]; then
+if [[ ! -f "$CONFIG_ROOT_DIR/$ENV.sh" ]]; then
   echo "No config file for environment $ENV found"
   exit 1
 fi
@@ -28,4 +28,4 @@ GC_SA_NAME=pgfarm-app
 GKE_KSA_NAME=pgfarm-ksa
 GCS_BACKUP_BUCKET=app-database-backups
 
-source $ROOT_DIR/$ENV.sh
+source $CONFIG_ROOT_DIR/$ENV.sh

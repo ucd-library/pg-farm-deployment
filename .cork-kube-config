@@ -7,6 +7,13 @@
       "platform" : "docker-desktop",
       "namespace" : "pg-farm"
     },
+    "dev" : {
+      "platform" : "gke",
+      "namespace" : "default",
+      "cluster" : "pgfarm-dev",
+      "zone" : "us-central1-c",
+      "project" : "pgfarm-419213"
+    },
     "prod" : {
       "platform" : "gke",
       "namespace" : "default",
@@ -40,9 +47,39 @@
         }]
       }
     ],
+    "dev" : [
+      {
+        "k8sName" : "app-env",
+        "gcsmName" : "app-env",
+        "fromEnvFile" : true
+      },
+      {
+        "k8sName" : "oidc-config",
+        "fromEnvFile" : true,
+        "gcsmName" : "oidc-production"
+      },
+      {
+        "k8sName" : "service-account",
+        "mappings" : [{
+          "gcsmName" : "app-service-account",
+          "k8sProperty" : "service-account.json"
+        }]
+      },
+      {
+        "k8sName" : "pgfarm-ssl",
+        "mappings" : [{
+          "gcsmName" : "ssl-pgfarm-dev-cert",
+          "k8sProperty" : "ssl-pgfarm.crt"
+        },
+        {
+          "gcsmName" : "ssl-pgfarm-dev-key",
+          "k8sProperty" : "ssl-pgfarm.key"
+        }]
+      }
+    ],
     "prod" : [
       {
-        "k8sName" : "app-env",          
+        "k8sName" : "app-env",
         "gcsmName" : "app-env",
         "fromEnvFile" : true
       },
@@ -169,6 +206,9 @@
       "path" : "kustomize/gateway-dev",
       "environments" : {
         "local-dev" : {
+          "ignore" : true
+        },
+        "dev" : {
           "ignore" : true
         }
       }

@@ -1,2 +1,4 @@
 GKE_EXTERNAL_IP=35.194.40.29
 K8S_NAMESPACE=default
+GKE_CLUSTER_NAME=pgfarm-dev
+GCS_BACKUP_BUCKET=app-database-backups-dev
