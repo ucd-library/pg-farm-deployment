@@ -13,7 +13,7 @@ for arg in "$@"; do
   esac
 done
 
-cork-kube init dev ../
+cork-kube init dev -c ../
 
 source ../config/config.sh dev
 

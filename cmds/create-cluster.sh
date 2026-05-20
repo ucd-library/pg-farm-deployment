@@ -29,6 +29,14 @@ if [[ "$USE_PRESERVED_VOLUMES" == "true" && "$ENV" != "dev" ]]; then
   exit 1
 fi
 
+# Preemptible/spot VMs for dev to reduce cost
+SPOT_FLAGS=()
+INSTANCE_POOL_TYPE=n2-standard-8
+if [[ "$ENV" == "dev" ]]; then
+  SPOT_FLAGS=(--spot)
+  INSTANCE_POOL_TYPE=e2-standard-4
+fi
+
 # This will fail to init kubectl since the cluster doesn't exist yet, but it will create the necessary context and config structure for later steps
 cork-kube init $ENV -c ../ || true
 
@@ -45,18 +53,20 @@ gcloud beta container clusters create ${GKE_CLUSTER_NAME} \
   --enable-network-policy \
   --enable-image-streaming \
   --workload-pool=${GC_PROJECT_ID}.svc.id.goog \
-  --node-labels=intendedfor=services || true
+  --node-labels=intendedfor=services \
+  "${SPOT_FLAGS[@]}" || true
 
 gcloud beta container node-pools create instance-pool \
   --cluster ${GKE_CLUSTER_NAME} \
   --zone ${GKE_CLUSTER_ZONE} \
-  --machine-type n2-standard-8 \
+  --machine-type ${INSTANCE_POOL_TYPE} \
   --num-nodes 1 \
   --disk-size 150GB \
   --spot \
   --workload-metadata=GKE_METADATA \
   --node-labels=intendedfor=instance-pool \
-  --enable-autoscaling --min-nodes 1 --max-nodes 8 || true
+  --enable-autoscaling --min-nodes 1 --max-nodes 8 \
+  "${SPOT_FLAGS[@]}" || true
 
 # ./create-secrets.sh $ENV
 
