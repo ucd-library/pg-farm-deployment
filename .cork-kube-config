@@ -123,7 +123,7 @@
     "local-dev" : {
       "config" : {
         "args" : {
-          "ROOT_DIR" : "${__DIRNAME}/config",
+          "CONFIG_ROOT_DIR" : "${__DIRNAME}/config",
           "LOCAL_DEV": "true",
           "ENV" : "${__ENV}"
         },
@@ -199,17 +199,6 @@
       "environments" : {
         "local-dev" : {
           "template" : ["local-dev", "pgfarm"]
-        }
-      }
-    },
-    {
-      "path" : "kustomize/gateway-dev",
-      "environments" : {
-        "local-dev" : {
-          "ignore" : true
-        },
-        "dev" : {
-          "ignore" : true
         }
       }
     },

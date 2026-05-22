@@ -1,9 +1,9 @@
 #! /bin/bash
 
 # echo $ROOT_DIR
-# if [[ -z $ROOT_DIR ]]; then
+if [[ -z $CONFIG_ROOT_DIR ]]; then
   CONFIG_ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-# fi
+fi
 echo $CONFIG_ROOT_DIR
 YAML_DIR=$(realpath $CONFIG_ROOT_DIR/../kustomize)
 

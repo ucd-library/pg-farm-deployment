@@ -10,7 +10,7 @@ spec:
         - name: gateway
           image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.7.5
           volumeMounts:
-            - mountPath: /etc/pgfarm/certs/pgfarm.library.ucdavis.edu
+            - mountPath: /etc/pgfarm/certs/dev.pgfarm.library.ucdavis.edu
               name: pgfarm-ssl
           env:
             - name: LOG_LEVEL

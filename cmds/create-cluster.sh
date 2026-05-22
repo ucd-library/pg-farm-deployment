@@ -125,3 +125,7 @@ EOF
 fi
 
 echo "Cluster $GKE_CLUSTER_NAME created and configured successfully."
+
+if [[ "$ENV" == "dev" ]]; then
+  cork-kube up dev -c ../
+fi
