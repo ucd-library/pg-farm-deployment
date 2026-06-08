@@ -2,6 +2,8 @@
 
 set -e
 
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 ENVIRONMENT=$1
 PGFARM_VERSION=$2
 
@@ -76,6 +78,17 @@ edit health-probe deployment "$PGFARM_REGISTRY/$PGFARM_IMAGE_NAME:$PGFARM_VERSIO
 edit image-prepuller daemonset "$PGFARM_REGISTRY/$PGFARM_IMAGE_NAME:$PGFARM_VERSION" prepuller-base
 edit image-prepuller daemonset "$PG_REGISTRY/postgres:$POSTGRES_VERSION" prepuller-pg
 
+# GKE Auth Proxy (GCE single-container instance config) — dev and prod only
+if [[ "$ENVIRONMENT" == "dev" || "$ENVIRONMENT" == "prod" ]]; then
+  GCE_CONFIG=$ROOT_DIR/gke-auth-proxy/config.sh
+  echo "Updating GCE auth proxy image to $PGFARM_REGISTRY/gke-auth-proxy:$PGFARM_VERSION"
+  node -e "
+    const fs = require('fs');
+    const content = fs.readFileSync('$GCE_CONFIG', 'utf8');
+    fs.writeFileSync('$GCE_CONFIG', content.replace(/^PG_FARM_VERSION=.*/m, 'PG_FARM_VERSION=$PGFARM_VERSION'));
+  "
+fi
+
 echo ""
 read -p "Would you like to commit the changes to git? (y/n): " COMMIT_CHANGES
 
@@ -95,5 +108,5 @@ else
 fi
 
 echo ""
-echo "Done updating deployment $ENVIRONMENT to version $VERSION"
+echo "Done updating deployment $ENVIRONMENT to version $PGFARM_VERSION"
 
