@@ -1,6 +1,6 @@
 #! /bin/bash
 
-PG_FARM_VERSION=0.8.1
+PG_FARM_VERSION=0.8.2
 GC_PROJECT_ID=pgfarm-419213
 GCE_REGION=us-central1
 GCE_ZONE=us-central1-c
