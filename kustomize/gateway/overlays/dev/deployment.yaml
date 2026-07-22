@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.8.2
+          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.8.3
           volumeMounts:
             - mountPath: /etc/pgfarm/certs/dev.pgfarm.library.ucdavis.edu
               name: pgfarm-ssl
