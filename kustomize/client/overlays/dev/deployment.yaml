@@ -7,13 +7,11 @@ spec:
     spec:
       containers:
         - name: client
-          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.8.3
+          image: us-docker.pkg.dev/pgfarm-419213/containers/pgfarm-service:0.9.0
           env:
             - name: APP_URL
               value: https://dev.pgfarm.library.ucdavis.edu
             - name: METRICS_ENABLED
-              value: 'true'
-            - name: METRICS_EXPORT_GC
               value: 'true'
             - name: CLIENT_ENV
               value: dev
