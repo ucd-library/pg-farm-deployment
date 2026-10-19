@@ -98,11 +98,11 @@
       {
         "k8sName" : "pgfarm-ssl",
         "mappings" : [{
-          "gcsmName" : "ssl-pgfarm-cert",
+          "gcsmName" : "library-tls-wildcard-cert",
           "k8sProperty" : "ssl-pgfarm.crt"
         },
         {
-          "gcsmName" : "ssl-pgfarm-key",
+          "gcsmName" : "library-tls-wildcard-key",
           "k8sProperty" : "ssl-pgfarm.key"
         }]
       }
